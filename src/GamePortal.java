@@ -3,10 +3,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import Cards.src.SpitGame;
+import NumberGuessGameTemplate.src.NumberGuessGame;
+import Quiz.src.Quiz;
 import Game.Game;
-// import Quiz.Quiz;
 import Game.ErrorCheck;
-// import Jeopardy.Jeopardy;
 
 public class GamePortal {
     static Scanner sc = new Scanner(System.in);
@@ -37,8 +38,8 @@ public class GamePortal {
 
     public static void loadGames() {
         games.clear();
-        games.add(new NumberGuessGame());
-        // games.add(new StoreGame());
+        games.add(new NumberGuessGame(sc));
+        games.add(new SpitGame());
         games.add(new Quiz());
         
     }

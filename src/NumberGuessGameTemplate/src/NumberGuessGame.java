@@ -1,31 +1,38 @@
-package Game.NumberGuessGameTemplate.src;
+package NumberGuessGameTemplate.src;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Game.GameGeneric;
+import Game.GameWriteable;
+
 import java.util.Random;
 
-public class Game {
+//if ishighscore print it took you blank guesses! you beat your best score of blank1!
+//if not say it took you blank guesses! your best score is blank1!
+
+public class NumberGuessGame extends GameGeneric implements GameWriteable {
     int guesses;
     int numToGuess;
     //= from low to high
-    static Scanner sc = new Scanner(System.in);
+    Scanner sc;
     ArrayList<Integer> previousGuesses = new ArrayList<>();
     
 
-    Game(int low, int high) {
+    public NumberGuessGame(Scanner sc) {
+        this.sc = sc;
         Random rand = new Random();
         guesses = 0;
         previousGuesses = new ArrayList<>();
-        numToGuess = rand.nextInt(low, high);
-        System.out.println("I'm thinking of a number from " + low + " to " + high);
+        numToGuess = rand.nextInt(1, 100);
         // when we create a game, we get a random number between low to high.
         // assign numToGuess to that random number.
         
     }
-
-    void play() {
+    @Override
+    public void play() {
+        System.out.println("I'm thinking of a number from " + 1 + " to " + 100);
         int guess = getGuess();
         while (guess != numToGuess) {
-            guesses++;
             if (guess >= numToGuess){
                 System.out.println("The number's lower!");
             } else if (guess <= numToGuess) {
@@ -33,7 +40,7 @@ public class Game {
             }
             guess = getGuess();
         }
-        System.out.println("You guessed the number! Thanks for playing!");
+        System.out.println("You guessed the number in " + guesses + " guesses!");
     }
 
     int getGuess() {
@@ -56,4 +63,14 @@ public class Game {
     }
     }
 
+    @Override
+    public String getScore() {
+        return String.valueOf(guesses);
+    }
+
+    @Override
+    public boolean isHighScore(String score, String currentHighScore) {
+        if (currentHighScore == null) return true;
+        return Integer.valueOf(score) < Integer.valueOf(currentHighScore);
+    }
 }
