@@ -1,13 +1,50 @@
 package Cards.src;
+import java.util.concurrent.CountDownLatch;
+
+import Game.GameWriteable;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class App extends PApplet {
+public class App extends PApplet implements GameWriteable {
 
     CardGame cardGame = new Spit();
     private int timer;
     PImage bg;
     PImage award;
+    public CountDownLatch latch;
+    public boolean won = false;
+    private String score = null;
+    public int remaining = 0;
+
+    @Override
+    public String getGameName(){
+        return "Spit";
+    }
+
+    @Override
+    public String getScore(){
+        return score;
+    }
+
+    @Override
+    public boolean isHighScore(String score, String currentHighScore) {
+        if (currentHighScore == null) return true;
+        return Integer.valueOf(score) < Integer.valueOf(currentHighScore);
+    }
+
+    @Override
+    public void play() {
+        latch = new CountDownLatch(1);
+        new Thread(() -> processing.core.PApplet.runSketch(new String[]{"App"}, this)).start();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (won) {
+            score = String.valueOf(remaining);
+        }
+    }
 
     public static void main(String[] args) {
         PApplet.main("App");

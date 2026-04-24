@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import Cards.src.SpitGame;
+import Cards.src.App;
 import NumberGuessGameTemplate.src.NumberGuessGame;
 import Quiz.src.Quiz;
 import Game.Game;
@@ -39,7 +39,7 @@ public class GamePortal {
     public static void loadGames() {
         games.clear();
         games.add(new NumberGuessGame(sc));
-        games.add(new SpitGame());
+        games.add(new App());
         games.add(new Quiz());
         
     }
